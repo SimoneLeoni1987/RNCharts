@@ -1,0 +1,7 @@
+const EVENTTYPES = {
+  BLOODPRESSURE: 'BLOODPRESSURE',
+  STRESS: 'STRESS',
+  OXYGEN: 'OXYGEN',
+};
+
+export default EVENTTYPES;
