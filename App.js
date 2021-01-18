@@ -42,7 +42,7 @@ const App = () => {
       return test[eventSelected];
     });
 
-    console.log(values);
+    console.log('test', values);
 
     setLabels(labels);
     setValues(values);
