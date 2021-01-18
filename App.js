@@ -7,14 +7,13 @@
  */
 
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, Button, Text} from 'react-native';
+import {StyleSheet, View, Button, Text, ScrollView} from 'react-native';
 import moment from 'moment';
+import {TESTS} from './data/dummy';
 
 import Calendar from './component/Calendar';
-import Chart from './component/Chart';
-import {TESTS} from './data/dummy';
 import EVENTTYPES from './model/EventType';
-import Dropdown from './component/Dropdown';
+import EventChart from './component/EventChart';
 
 // TODO
 // Menu Dropdown con tag eventi
@@ -23,54 +22,36 @@ import Dropdown from './component/Dropdown';
 // Importare grafico
 
 const App = () => {
-  const [values, setValues] = useState([]);
-  const [labels, setLabels] = useState([]);
-  const [eventSelected, setEventSelected] = useState(null);
+  const [filteredValues, setFilteredValues] = useState([]);
 
-  useEffect(() => {
-    if (!eventSelected) return;
+  const handleRangeChange = (startDate, endDate) => {
+    let a = moment(startDate).format('D/M');
+    let b = moment(endDate).format('D/M');
+    console.log(`${a} - ${b}`);
 
-    // Estrapolare le labels
-    const labels = TESTS.map((test) => {
-      let day = moment(test.data).format('D/M');
-      return day;
+    // Filtro
+    const filteredValues = TESTS.filter((item) => {
+      return (
+        item.data >= moment(startDate).format() &&
+        item.data <= moment(endDate).format()
+      );
     });
 
-    // Estrapolare in base al filtro tag
-    // es value1
-    const values = TESTS.map((test) => {
-      return test[eventSelected];
-    });
-
-    console.log('test', values);
-
-    setLabels(labels);
-    setValues(values);
-  }, [eventSelected]);
-
-  const handlerEventSelected = (eventSelected) => {
-    console.log(eventSelected);
-    setEventSelected(eventSelected);
-    //use state ed usare in use effect per effettuare un nuovo filtro
+    setFilteredValues(filteredValues);
   };
 
   return (
     <View style={styles.screen}>
-      {/* Calendar */}
-      <Calendar />
+      <ScrollView>
+        {/* Calendar */}
+        <Calendar onRangeChange={handleRangeChange} />
 
-      {/* Filter */}
-      <Dropdown
-        values={Object.keys(EVENTTYPES)}
-        onValueSelected={handlerEventSelected}
-      />
-
-      {/* Chart */}
-      <Chart
-        // display.labels e display.values
-        labels={labels}
-        data={values}
-      />
+        <EventChart values={filteredValues} defaultEvent={EVENTTYPES.OXYGEN} />
+        <EventChart
+          values={filteredValues}
+          defaultEvent={EVENTTYPES.BLOODPRESSURE}
+        />
+      </ScrollView>
     </View>
   );
 };

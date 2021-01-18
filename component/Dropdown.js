@@ -4,9 +4,9 @@ import {View, Text} from 'react-native';
 import Menu, {MenuItem, MenuDivider} from 'react-native-material-menu';
 
 export default (props) => {
-  const {values, onValueSelected} = props;
+  const {values, onValueSelected, defaultValue} = props;
 
-  const [valueSelected, setValueSelected] = useState('Evento');
+  const [valueSelected, setValueSelected] = useState(defaultValue);
 
   const menu = useRef(null);
 

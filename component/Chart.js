@@ -7,7 +7,7 @@ const Chart = (props) => {
   const {labels, data} = props;
 
   // const d = [1, 2, 3, 4, 5];
-  const d = data;
+  const d = data.length == 0 ? [1] : data;
 
   return (
     <View>
