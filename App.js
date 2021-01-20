@@ -47,10 +47,10 @@ const App = () => {
         <Calendar onRangeChange={handleRangeChange} />
 
         <EventChart values={filteredValues} defaultEvent={EVENTTYPES.OXYGEN} />
-        <EventChart
+        {/* <EventChart
           values={filteredValues}
           defaultEvent={EVENTTYPES.BLOODPRESSURE}
-        />
+        /> */}
       </ScrollView>
     </View>
   );
